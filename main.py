@@ -18,6 +18,10 @@ def valid(board, dim_x, dim_y) -> bool:
         '''
         n = len(board)
         return dim_y * dim_x == n
+    for tile in board:
+        if tile != '-' and tile != 'X':
+            print(f'"{tile}" is invalid.')
+            return False 
     if dim_y == dim_x == -1:        
         return validate_sqr_board(board)
     else:
@@ -292,25 +296,17 @@ if __name__ == '__main__':
     parser.add_argument('-y','--y_size', default=8,type=int,
                         help='Default: 8. Height of the board',dest ='dim_y')
     parser.add_argument('-m','--minesweeper_example', action='store_true',
-                        help='Does not play the game, just shows the example working minesweeper function',dest ='minesweeper')
+                        help='Does not play the game. Displays a solved minesweeper board. Include -b parameter to set board.',dest ='minesweeper')
+    parser.add_argument('-b','--board', default=["-", "-", "-", "-", "-","-", "-", "-", "-", "-","X", "X", "-", "-", "-","-", "-", "-", "-", "-","-", "-", "-", "-", "X"],
+                        nargs='+',
+                        help='This parameter must be used with conjunction with the -m --minesweeper parameter. Sets the board to solve. Put each board tile as a space-seperated value. Either "-" or "X".',
+                        dest ='board')
+    
     args : argparse.Namespace = parser.parse_args()
 
     if args.minesweeper:
-        print('''
-        Running minesweeper([
-                    "-", "-", "-", "-", "-",
-                    "-", "-", "-", "-", "-",
-                    "X", "X", "-", "-", "-",
-                    "-", "-", "-", "-", "-",
-                    "-", "-", "-", "-", "X", 
-                    ])''')
-        minesweeper([
-        "-", "-", "-", "-", "-",
-        "-", "-", "-", "-", "-",
-        "X", "X", "-", "-", "-",
-        "-", "-", "-", "-", "-",
-        "-", "-", "-", "-", "X", 
-        ])
+        print(f'''Running minesweeper({args.board})''')
+        minesweeper(args.board)
     else:
         play(args.difficulty,args.dim_x,args.dim_y)
     
