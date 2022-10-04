@@ -1,5 +1,4 @@
 import sys, random, argparse
-from urllib.parse import non_hierarchical
 
 def valid(board, dim_x, dim_y) -> bool:
     '''
